@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VitrineWeb — Páginas web para tu negocio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --surface: #16161f;
+      --border: #2a2a3a;
+      --accent: #7c5cfc;
+      --accent2: #c084fc;
+      --accent-glow: rgba(124,92,252,0.25);
+      --text: #f0f0f8;
+      --muted: #8888aa;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--accent2); }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+      margin-left: 2rem;
+    }
+
+    nav a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+
+    .nav-cta:hover { background: #6a4ae0 !important; transform: translateY(-1px); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 5% 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,92,252,0.18) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124,92,252,0.12);
+      border: 1px solid rgba(124,92,252,0.3);
+      color: var(--accent2);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 800px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 520px;
+      line-height: 1.7;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-btns {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(124,92,252,0.35);
+    }
+
+    .btn-primary:hover {
+      background: #6a4ae0;
+      transform: translateY(-2px);
+      box-shadow: 0 0 45px rgba(124,92,252,0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .hero-stats {
+      margin-top: 4rem;
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* SECTION BASE */
+    section { padding: 6rem 5%; }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.8rem;
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-top: 0.8rem;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+    .section-head { margin-bottom: 3.5rem; }
+
+    /* SERVICIOS */
+    #servicios { background: var(--bg2); }
+
+    .planes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+    }
+
+    .plan {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .plan:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .plan.featured {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(124,92,252,0.08), var(--surface));
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -12px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+    }
+
+    .plan-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-price {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.4rem;
+      color: var(--accent2);
+      margin: 0.5rem 0;
+    }
+
+    .plan-price span { font-size: 1rem; color: var(--muted); font-weight: 400; }
+
+    .plan-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+
+    .plan-features { list-style: none; }
+
+    .plan-features li {
+      font-size: 0.9rem;
+      color: var(--text);
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .plan-features li::before { content: '✦'; color: var(--accent2); font-size: 0.65rem; }
+
+    /* DEMOS */
+    #demos { background: var(--bg); }
+
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+    }
+
+    .demo-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: border-color 0.25s, transform 0.25s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .demo-card:hover { border-color: var(--accent2); transform: translateY(-5px); }
+
+    .demo-preview {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .demo-preview.postres { background: linear-gradient(135deg, #2d1b30, #1a0a20); }
+    .demo-preview.ropa    { background: linear-gradient(135deg, #0d1f2d, #0a0f1e); }
+    .demo-preview.perfume { background: linear-gradient(135deg, #1c1508, #0f0c04); }
+
+    .demo-info { padding: 1.3rem; }
+    .demo-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.4rem;
+    }
+    .demo-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .demo-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+    .demo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--accent2);
+      font-weight: 500;
+    }
+
+    /* POR QUÉ */
+    #porque { background: var(--bg2); }
+
+    .ventajas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+    }
+
+    .ventaja {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.8rem;
+      transition: border-color 0.2s;
+    }
+
+    .ventaja:hover { border-color: var(--accent); }
+
+    .ventaja-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .ventaja-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .ventaja-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+    /* CONTACTO */
+    #contacto {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .contact-box {
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+    }
+
+    .contact-box h2 { margin-bottom: 0.8rem; }
+    .contact-box p { color: var(--muted); font-size: 1rem; margin-bottom: 2rem; line-height: 1.7; }
+
+    .btn-wpp {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: #25d366;
+      color: #fff;
+      padding: 0.9rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 0 30px rgba(37,211,102,0.25);
+    }
+
+    .btn-wpp:hover { background: #1eb558; transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 5%;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer span { color: var(--accent2); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav a:not(.nav-cta) { display: none; }
+      .hero-stats { gap: 1.5rem; }
+      .contact-box { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Vitrine<span>Web</span></div>
+    <div>
+      <a href="#servicios">Servicios</a>
+      <a href="#demos">Demos</a>
+      <a href="#contacto" class="nav-cta">Contáctame</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-badge">✦ Páginas web para emprendedores</div>
+    <h1>Tu negocio merece una <span class="highlight">presencia digital</span> profesional</h1>
+    <p class="hero-sub">Diseño páginas web elegantes para vendedores de ropa, postres, perfumes y más — con tu catálogo, tu marca y tu link de WhatsApp.</p>
+    <div class="hero-btns">
+      <a href="#demos" class="btn-primary">Ver demos</a>
+      <a href="#servicios" class="btn-secondary">Ver precios</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">3–5</div><div class="stat-label">Días de entrega</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Optimizada para móvil</div></div>
+      <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Clientes pueden verte</div></div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="section-head reveal">
+      <div class="section-label">Planes</div>
+      <h2>Elige el plan ideal<br>para tu negocio</h2>
+      <p class="section-sub">Sin costos ocultos. Todo incluido para que te veas profesional desde el primer día.</p>
+    </div>
+    <div class="planes reveal">
+      <div class="plan">
+        <div class="plan-name">Básico</div>
+        <div class="plan-price">$80 <span>USD</span></div>
+        <p class="plan-desc">Ideal para emprendedores que recién empiezan y quieren verse profesionales.</p>
+        <ul class="plan-features">
+          <li>1 página completa</li>
+          <li>Sección de productos/catálogo</li>
+          <li>Botón de WhatsApp</li>
+          <li>Diseño responsive (móvil)</li>
+          <li>Entrega en 3 días</li>
+        </ul>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">⭐ Más popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$150 <span>USD</span></div>
+        <p class="plan-desc">Para negocios que quieren destacar con más secciones y funcionalidades.</p>
+        <ul class="plan-features">
+          <li>Todo lo del plan Básico</li>
+          <li>Galería de fotos</li>
+          <li>Sección de reseñas/testimonios</li>
+          <li>Formulario de contacto</li>
+          <li>Colores y logo personalizados</li>
+          <li>Entrega en 4 días</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Premium</div>
+        <div class="plan-price">$280 <span>USD</span></div>
+        <p class="plan-desc">La solución completa: dominio propio, SEO y soporte por 30 días.</p>
+        <ul class="plan-features">
+          <li>Todo lo del plan Pro</li>
+          <li>Dominio .com por 1 año</li>
+          <li>Hosting incluido</li>
+          <li>SEO básico (Google)</li>
+          <li>2 revisiones incluidas</li>
+          <li>Soporte 30 días</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMOS -->
+  <section id="demos">
+    <div class="section-head reveal">
+      <div class="section-label">Demos</div>
+      <h2>Mira ejemplos reales<br>de lo que creo</h2>
+      <p class="section-sub">Cada demo está hecho para un rubro específico. ¿Reconoces tu negocio aquí?</p>
+    </div>
+    <div class="demos-grid reveal">
+      <a href="#" class="demo-card">
+        <div class="demo-preview postres">🧁</div>
+        <div class="demo-info">
+          <div class="demo-tag">Dulcería · Postres</div>
+          <div class="demo-title">Dulce Encanto</div>
+          <div class="demo-desc">Tortas, cupcakes y postres personalizados. Diseño cálido con paleta pastel y catálogo visual.</div>
+          <div class="demo-link">Ver demo →</div>
+        </div>
+      </a>
+      <a href="#" class="demo-card">
+        <div class="demo-preview ropa">👗</div>
+        <div class="demo-info">
+          <div class="demo-tag">Moda · Ropa</div>
+          <div class="demo-title">StyleDrop</div>
+          <div class="demo-desc">Tienda de ropa moderna con galería de outfits, tallas disponibles y compra por WhatsApp.</div>
+          <div class="demo-link">Ver demo →</div>
+        </div>
+      </a>
+      <a href="#" class="demo-card">
+        <div class="demo-preview perfume">🌹</div>
+        <div class="demo-info">
+          <div class="demo-tag">Belleza · Perfumes</div>
+          <div class="demo-title">Aura Scents</div>
+          <div class="demo-desc">Catálogo de fragancias elegante con descripción de notas y pedidos directos por WhatsApp.</div>
+          <div class="demo-link">Ver demo →</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- POR QUÉ -->
+  <section id="porque">
+    <div class="section-head reveal">
+      <div class="section-label">Ventajas</div>
+      <h2>¿Por qué elegirme<br>a mí?</h2>
+    </div>
+    <div class="ventajas reveal">
+      <div class="ventaja">
+        <div class="ventaja-icon">⚡</div>
+        <div class="ventaja-title">Entrega rápida</div>
+        <div class="ventaja-desc">Tu página lista en 3 a 5 días hábiles. Sin esperas eternas ni promesas vacías.</div>
+      </div>
+      <div class="ventaja">
+        <div class="ventaja-icon">📱</div>
+        <div class="ventaja-title">100% móvil</div>
+        <div class="ventaja-desc">El 90% de tus clientes te visitan desde el celular. Tu web se ve perfecta en cualquier pantalla.</div>
+      </div>
+      <div class="ventaja">
+        <div class="ventaja-icon">💬</div>
+        <div class="ventaja-title">WhatsApp integrado</div>
+        <div class="ventaja-desc">Botón flotante con mensaje pre-escrito. El cliente llega listo para comprar.</div>
+      </div>
+      <div class="ventaja">
+        <div class="ventaja-icon">🎨</div>
+        <div class="ventaja-title">Diseño único</div>
+        <div class="ventaja-desc">Cada web refleja la identidad de tu negocio. No son plantillas genéricas.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="contact-box reveal">
+      <h2>¿Listo para<br>empezar?</h2>
+      <p>Escríbeme por WhatsApp y cuéntame sobre tu negocio. Te respondo en menos de 24 horas con una propuesta personalizada.</p>
+      <a href="https://wa.me/51XXXXXXXXX?text=Hola,%20me%20interesa%20una%20p%C3%A1gina%20web%20para%20mi%20negocio" class="btn-wpp" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Escribir por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <span>VitrineWeb</span> — Páginas web para emprendedores peruanos 🇵🇪</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+</body>
+</html>
