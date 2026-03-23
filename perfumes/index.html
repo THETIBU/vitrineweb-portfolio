@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURA SCENTS - Alta Perfumería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808;
+      --gold: #c9a84c;
+      --gold-hover: #e0bc55;
+      --white: #f5f0e8;
+      --gray: #1a1a1a;
+      --gray-light: #2a2a2a;
+      --whatsapp: #25D366;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      cursor: none;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      background-color: var(--bg);
+      color: var(--white);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* CUSTOM CURSOR */
+    .custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s, height 0.3s, background-color 0.3s, box-shadow 0.3s;
+      z-index: 9999;
+    }
+
+    .custom-cursor.hover {
+      width: 50px;
+      height: 50px;
+      background-color: rgba(201, 168, 76, 0.15);
+      box-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
+    }
+
+    /* REVEAL ON SCROLL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* HEADER SMART SCROLL */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 5%;
+      background: rgba(8, 8, 8, 0.4);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.0);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: transform 0.5s ease, background 0.5s ease, padding 0.5s ease, border-color 0.5s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    header.scrolled-down {
+      transform: translateY(-100%);
+    }
+
+    header.scrolled-up {
+      background: rgba(8, 8, 8, 0.95);
+      padding: 1rem 5%;
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    }
+
+    .logo {
+      font-size: 2.2rem;
+      letter-spacing: 6px;
+      color: var(--white);
+      font-weight: 400;
+      text-transform: uppercase;
+      transition: text-shadow 0.4s, color 0.4s;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .logo:hover {
+      text-shadow: 0 0 15px rgba(201, 168, 76, 0.6);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-weight: 400;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #aaa;
+      transition: color 0.4s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .btn-gold-outline {
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.8rem 1.8rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.4s ease;
+      background: transparent;
+    }
+
+    .btn-gold-outline:hover {
+      background: var(--gold);
+      color: var(--bg);
+      box-shadow: 0 0 15px rgba(201, 168, 76, 0.4);
+    }
+
+    /* HERO PARALLAX */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 5% 0;
+      position: relative;
+    }
+
+    .hero-bg-parallax {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120%;
+      background: radial-gradient(circle at center, rgba(201, 168, 76, 0.12) 0%, var(--bg) 70%);
+      z-index: 0;
+      transform: translateY(0);
+      pointer-events: none;
+    }
+
+    .hero-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-image: radial-gradient(var(--gold) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.08;
+      animation: drift 60s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+      mask-image: radial-gradient(circle, black 40%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle, black 40%, transparent 80%);
+    }
+
+    @keyframes drift {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 500px 500px;
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: 6rem;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: 3px;
+      animation: titleGlow 4s infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% {
+        text-shadow: 0 0 10px rgba(201, 168, 76, 0);
+      }
+
+      100% {
+        text-shadow: 0 0 40px rgba(201, 168, 76, 0.25);
+      }
+    }
+
+    .hero h1 i {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero p {
+      font-size: 1.35rem;
+      font-weight: 300;
+      margin: 0 auto 3.5rem;
+      color: #aaa;
+      max-width: 650px;
+      letter-spacing: 1px;
+    }
+
+    .btn-gold-solid {
+      background: var(--gold);
+      color: var(--bg);
+      padding: 1.2rem 3.5rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: 600;
+      border: none;
+      transition: all 0.4s ease;
+      display: inline-block;
+      cursor: none;
+    }
+
+    .btn-gold-solid:hover {
+      background: var(--gold-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(201, 168, 76, 0.4);
+    }
+
+    /* ABOUT US */
+    .about {
+      padding: 8rem 5%;
+      background: var(--bg);
+      text-align: center;
+      border-bottom: 1px solid var(--gray);
+      position: relative;
+      z-index: 2;
+    }
+
+    .about h2 {
+      font-size: 3.5rem;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .about-text {
+      max-width: 700px;
+      margin: 0 auto 4rem;
+      font-size: 1.2rem;
+      color: #aaa;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .feature-item {
+      padding: 2.5rem;
+      border: 1px solid var(--gray);
+      transition: border-color 0.4s, transform 0.4s;
+    }
+
+    .feature-item:hover {
+      border-color: var(--gold);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(201, 168, 76, 0.05);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--gold);
+    }
+
+    .feature-title {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* COLLECTION GRID */
+    .collection {
+      padding: 8rem 5%;
+      background: var(--bg);
+    }
+
+    .collection h2 {
+      font-size: 4rem;
+      text-align: center;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      letter-spacing: 3px;
+    }
+
+    .collection-subtitle {
+      text-align: center;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 0.9rem;
+      margin-bottom: 5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: rgba(26, 26, 26, 0.4);
+      padding: 3rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      position: relative;
+      transition: all 0.5s ease;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: "";
+      position: absolute;
+      top: var(--y, 0);
+      left: var(--x, 0);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.1) 0%, transparent 60%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: 0;
+    }
+
+    .product-card:hover::before {
+      opacity: 1;
+    }
+
+    .product-card>* {
+      position: relative;
+      z-index: 1;
+    }
+
+    .product-card:hover {
+      border-color: rgba(201, 168, 76, 0.4);
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .badge {
+      position: absolute;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #888;
+      transition: color 0.4s;
+    }
+
+    .product-card:hover .badge {
+      color: var(--gold);
+    }
+
+    .product-emoji {
+      font-size: 4rem;
+      margin: 2rem 0 1.5rem;
+      display: inline-block;
+      opacity: 0.8;
+      transition: all 0.5s ease;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.05));
+    }
+
+    .product-card:hover .product-emoji {
+      transform: scale(1.1);
+      opacity: 1;
+      filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.4));
+    }
+
+    .product-name {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+
+    .product-notes {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 2rem;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .product-price {
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .btn-buy-full {
+      width: 100%;
+      border: 1px solid var(--gray);
+      background: transparent;
+      color: var(--white);
+      padding: 1rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.4s ease;
+      display: block;
+    }
+
+    .product-card:hover .btn-buy-full {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .btn-buy-full:hover {
+      background: var(--gold) !important;
+      color: var(--bg) !important;
+      box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+    }
+
+    /* REVIEWS */
+    .reviews {
+      padding: 8rem 5%;
+      background: var(--gray-light);
+      text-align: center;
+    }
+
+    .reviews h2 {
+      font-size: 3.5rem;
+      font-weight: 300;
+      margin-bottom: 4rem;
+      color: var(--white);
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .review-card {
+      padding: 3rem;
+      background: var(--bg);
+      border: 1px solid transparent;
+      transition: border-color 0.4s;
+    }
+
+    .review-card:hover {
+      border-color: rgba(201, 168, 76, 0.3);
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 3px;
+    }
+
+    .review-text {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #aaa;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+    }
+
+    .review-author {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+
+    /* FAQ ACCORDION PRO */
+    .faq {
+      padding: 8rem 5%;
+      background: var(--bg);
+      border-top: 1px solid var(--gray);
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq h2 {
+      font-size: 3.5rem;
+      text-align: center;
+      color: var(--gold);
+      margin-bottom: 4rem;
+      font-weight: 300;
+    }
+
+    .faq-container:hover details:not(:hover) {
+      opacity: 0.4;
+    }
+
+    /* Focus effect */
+    details {
+      border-bottom: 1px solid var(--gray);
+      padding: 2rem 0;
+      transition: all 0.4s;
+      cursor: none;
+    }
+
+    summary {
+      color: var(--white);
+      outline: none;
+      list-style: none;
+      position: relative;
+      padding-right: 3rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+
+    summary:hover {
+      color: var(--gold);
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: var(--gold);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+    }
+
+    details[open] summary {
+      color: var(--gold);
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+      color: var(--white);
+    }
+
+    details p {
+      margin-top: 1.5rem;
+      color: #888;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      padding-right: 2rem;
+    }
+
+    /* VIP CONTACT FORM */
+    .contact {
+      padding: 10rem 5%;
+      background: var(--bg);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid var(--gray);
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(201, 168, 76, 0.03);
+      border-radius: 50%;
+      filter: blur(80px);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .contact-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .contact h2 {
+      font-size: 4rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      color: var(--gold);
+      line-height: 1.1;
+    }
+
+    .contact p {
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-bottom: 4rem;
+      font-weight: 300;
+    }
+
+    .vip-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      text-align: left;
+    }
+
+    .vip-group {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .vip-group label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .vip-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--gray);
+      color: var(--white);
+      padding: 0.8rem 0;
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.1rem;
+      transition: border-color 0.4s, box-shadow 0.4s;
+      outline: none;
+      cursor: none;
+    }
+
+    .vip-input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 10px 15px -10px rgba(201, 168, 76, 0.3);
+    }
+
+    .vip-group:focus-within label {
+      opacity: 1;
+      text-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+    }
+
+    .vip-group.full {
+      grid-column: span 2;
+    }
+
+    .btn-vip-submit {
+      grid-column: span 2;
+      background: rgba(201, 168, 76, 0.05);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 1.5rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      cursor: none;
+      transition: all 0.5s;
+      margin-top: 1rem;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 600;
+    }
+
+    .btn-vip-submit:hover {
+      background: var(--gold);
+      color: var(--bg);
+      box-shadow: 0 0 40px rgba(201, 168, 76, 0.3);
+      transform: translateY(-3px);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 5rem 5% 3rem;
+      background: var(--gray-light);
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      letter-spacing: 8px;
+      color: var(--white);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .footer-links {
+      margin-bottom: 3rem;
+    }
+
+    .footer-links a {
+      color: #888;
+      margin: 0 1.5rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+      text-shadow: 0 0 10px rgba(201, 168, 76, 0.4);
+    }
+
+    .copyright {
+      font-size: 0.8rem;
+      color: #555;
+      letter-spacing: 2px;
+      border-top: 1px solid #333;
+      padding-top: 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+      text-transform: uppercase;
+    }
+
+    .copyright a {
+      color: var(--gold);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+      }
+
+      .about h2,
+      .collection h2,
+      .reviews h2,
+      .contact h2,
+      .faq h2 {
+        font-size: 2.8rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vip-form {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .vip-group.full {
+        grid-column: span 1;
+      }
+
+      .btn-vip-submit {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="custom-cursor" id="custom-cursor"></div>
+
+  <header id="smart-header">
+    <a href="#" class="logo">Aura <span>Scents</span></a>
+    <div class="nav-links">
+      <a href="#coleccion" class="hover-target">Colección</a>
+      <a href="#experiencia" class="hover-target">Experiencia</a>
+      <a href="#contacto" class="hover-target">Contacto</a>
+    </div>
+    <a href="https://wa.me/51xxxxxxxxxx" class="btn-gold-outline hover-target" target="_blank">Consultar</a>
+  </header>
+
+  <section class="hero">
+    <div class="hero-bg-parallax" id="hero-bg"></div>
+    <div class="hero-particles"></div>
+    <div class="hero-content reveal">
+      <h1><i>El arte</i> de oler<br>extraordinario</h1>
+      <p>Fragancias exclusivas que despiertan emociones, capturan memorias y definen tu esencia más pura.</p>
+      <a href="#coleccion" class="btn-gold-solid hover-target">Explorar Alta Colección</a>
+    </div>
+  </section>
+
+  <section class="about" id="historia">
+    <div class="reveal">
+      <h2>Nuestra historia</h2>
+      <p class="about-text">Aura Scents nació de la profunda pasión por las fragancias únicas y los aromas inolvidables.
+        Cada perfume en nuestra colección es seleccionado cuidadosamente por expertos artesanos para ofrecerte una
+        experiencia olfativa inigualable y de lujo.</p>
+
+      <div class="features-grid">
+        <div class="feature-item hover-target">
+          <div class="feature-icon">✨</div>
+          <div class="feature-title">Alta Perfumería</div>
+        </div>
+        <div class="feature-item hover-target">
+          <div class="feature-icon">✈️</div>
+          <div class="feature-title">Envío Asegurado</div>
+        </div>
+        <div class="feature-item hover-target">
+          <div class="feature-icon">💎</div>
+          <div class="feature-title">Autenticidad</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="collection" id="coleccion">
+    <div class="reveal">
+      <h2>Alta Perfumería</h2>
+      <p class="collection-subtitle">Extrait de Parfum</p>
+    </div>
+
+    <div class="grid">
+      <!-- HOMBRES -->
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Homme</div>
+        <div class="product-emoji">🪵</div>
+        <h3 class="product-name">Oud Noir Intense</h3>
+        <p class="product-notes">Notas: madera, ámbar, almizcle</p>
+        <div class="product-price">S/ 180</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Homme</div>
+        <div class="product-emoji">🌊</div>
+        <h3 class="product-name">Blue Ocean</h3>
+        <p class="product-notes">Notas: marino, cedro, cítrico</p>
+        <div class="product-price">S/ 95</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Homme</div>
+        <div class="product-emoji">🥃</div>
+        <h3 class="product-name">Black Legend</h3>
+        <p class="product-notes">Notas: cuero, especias, vainilla</p>
+        <div class="product-price">S/ 130</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Homme</div>
+        <div class="product-emoji">⚜️</div>
+        <h3 class="product-name">Gold Rush</h3>
+        <p class="product-notes">Notas: bergamota, sándalo, ámbar</p>
+        <div class="product-price">S/ 150</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Homme</div>
+        <div class="product-emoji">🌲</div>
+        <h3 class="product-name">Dark Forest</h3>
+        <p class="product-notes">Notas: musgo, pino, tierra</p>
+        <div class="product-price">S/ 110</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+
+      <!-- MUJERES -->
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Femme</div>
+        <div class="product-emoji">🌹</div>
+        <h3 class="product-name">Rose Eternelle</h3>
+        <p class="product-notes">Notas: rosa, jazmín, almizcle</p>
+        <div class="product-price">S/ 145</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Femme</div>
+        <div class="product-emoji">🍮</div>
+        <h3 class="product-name">Sweet Vanilla</h3>
+        <p class="product-notes">Notas: vainilla, caramelo, floral</p>
+        <div class="product-price">S/ 85</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Femme</div>
+        <div class="product-emoji">🌸</div>
+        <h3 class="product-name">Mystic Bloom</h3>
+        <p class="product-notes">Notas: orquídea, cedro, ámbar</p>
+        <div class="product-price">S/ 160</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Femme</div>
+        <div class="product-emoji">🍑</div>
+        <h3 class="product-name">Pink Paradise</h3>
+        <p class="product-notes">Notas: frutal, floral, suave</p>
+        <div class="product-price">S/ 90</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Pour Femme</div>
+        <div class="product-emoji">🌙</div>
+        <h3 class="product-name">Luna Blanche</h3>
+        <p class="product-notes">Notas: jazmín, sándalo, almizcle</p>
+        <div class="product-price">S/ 175</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+
+      <!-- UNISEX -->
+      <div class="product-card reveal hover-target">
+        <div class="badge">Unisex</div>
+        <div class="product-emoji">🪨</div>
+        <h3 class="product-name">Mineral Essence</h3>
+        <p class="product-notes">Notas: piedra, sal, vetiver</p>
+        <div class="product-price">S/ 200</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Unisex</div>
+        <div class="product-emoji">🍂</div>
+        <h3 class="product-name">Naked Wood</h3>
+        <p class="product-notes">Notas: madera cruda, cuero, humo</p>
+        <div class="product-price">S/ 165</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Unisex</div>
+        <div class="product-emoji">🌿</div>
+        <h3 class="product-name">Zen Garden</h3>
+        <p class="product-notes">Notas: bambú, té verde, flores</p>
+        <div class="product-price">S/ 120</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Unisex</div>
+        <div class="product-emoji">🍯</div>
+        <h3 class="product-name">Amber Dreams</h3>
+        <p class="product-notes">Notas: ámbar, miel, vainilla</p>
+        <div class="product-price">S/ 140</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge">Unisex</div>
+        <div class="product-emoji">🍋</div>
+        <h3 class="product-name">Citrus Storm</h3>
+        <p class="product-notes">Notas: limón, naranja, menta</p>
+        <div class="product-price">S/ 98</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+
+      <!-- EDICIONES LIMITADAS -->
+      <div class="product-card reveal hover-target">
+        <div class="badge" style="color:var(--gold)">Limitada</div>
+        <div class="product-emoji">👑</div>
+        <h3 class="product-name">Royal Oud</h3>
+        <p class="product-notes">Notas: oud, rosa, azafrán</p>
+        <div class="product-price">S/ 280</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge" style="color:var(--gold)">Limitada</div>
+        <div class="product-emoji">🌑</div>
+        <h3 class="product-name">Velvet Night</h3>
+        <p class="product-notes">Notas: noche, floral oscuro, ámbar</p>
+        <div class="product-price">S/ 250</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge" style="color:var(--gold)">Limitada</div>
+        <div class="product-emoji">🏜️</div>
+        <h3 class="product-name">Desert Gold</h3>
+        <p class="product-notes">Notas: arena, especias, oro</p>
+        <div class="product-price">S/ 230</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge" style="color:var(--gold)">Limitada</div>
+        <div class="product-emoji">🦪</div>
+        <h3 class="product-name">Pearl Essence</h3>
+        <p class="product-notes">Notas: marino, floral, suave</p>
+        <div class="product-price">S/ 210</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+      <div class="product-card reveal hover-target">
+        <div class="badge" style="color:var(--gold)">Limitada</div>
+        <div class="product-emoji">🌌</div>
+        <h3 class="product-name">Midnight Noir</h3>
+        <p class="product-notes">Notas: oscuro, misterioso, intenso</p>
+        <div class="product-price">S/ 260</div>
+        <button onclick="window.open('https://wa.me/51xxxxxxxxxx', '_blank')"
+          class="btn-buy-full hover-target">Adquirir</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews" id="experiencia">
+    <div class="reveal">
+      <h2>Experiencias</h2>
+      <div class="reviews-grid">
+        <div class="review-card hover-target">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Una fragancia con la que recibo cumplidos todo el día. El aroma evoluciona
+            maravillosamente en la piel."</p>
+          <div class="review-author">Carlos M.</div>
+        </div>
+        <div class="review-card hover-target">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Oud Noir es simplemente perfecto, muy duradero y con una estela inconfundible. Lo
+            amo."</p>
+          <div class="review-author">Valeria S.</div>
+        </div>
+        <div class="review-card hover-target">
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Calidad de boutique europea, pero con la facilidad de comprarlo localmente. Empaque de
+            lujo además."</p>
+          <div class="review-author">Roberto L.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="reveal faq-container">
+      <h2>El Arte de Aura</h2>
+      <details class="hover-target">
+        <summary>¿Cómo identificar tus notas ideales?</summary>
+        <p>Nuestros asesores expertos te guiarán a través de un viaje olfativo personalizado, evaluando tus preferencias
+          entre familias florales, amaderadas, cítricas u orientales para encontrar la firma aromática que mejor te
+          represente.</p>
+      </details>
+      <details class="hover-target">
+        <summary>¿Qué es un Extrait de Parfum?</summary>
+        <p>Es la concentración más alta en perfumería, conteniendo entre 20% y 40% de aceites esenciales puros. Esto
+          garantiza una longevidad excepcional en la piel (hasta 24 horas) y una estela profunda y sofisticada.</p>
+      </details>
+      <details class="hover-target">
+        <summary>¿Ofrecen servicio de regalo personalizado?</summary>
+        <p>Absolutamente. Cada botella se entrega en nuestro empaque de lujo sellado con cera estampada, e incluye la
+          opción de grabar iniciales en el vidrio y adjuntar una tarjeta premium escrita a mano.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <div class="contact-content reveal">
+      <h2>Consultoría Especializada</h2>
+      <p>Te ayudamos a encontrar el perfume perfecto para definir tu estilo personal o dar un regalo inolvidable.</p>
+
+      <form class="vip-form" onsubmit="event.preventDefault(); window.open('https://wa.me/51xxxxxxxxxx', '_blank');">
+        <div class="vip-group">
+          <label for="vip-name">Nombre</label>
+          <input type="text" id="vip-name" class="vip-input hover-target" placeholder="Ej: Isabella" required>
+        </div>
+        <div class="vip-group">
+          <label for="vip-email">Correo Electrónico</label>
+          <input type="email" id="vip-email" class="vip-input hover-target" placeholder="contacto@ejemplo.com" required>
+        </div>
+        <div class="vip-group full">
+          <label for="vip-style">Preferencia Olfativa</label>
+          <input type="text" id="vip-style" class="vip-input hover-target"
+            placeholder="Ej: Me gustan las notas de madera y vainilla...">
+        </div>
+        <button type="submit" class="btn-vip-submit hover-target">Solicitar Asesoría por WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">AURA SCENTS</div>
+    <div class="footer-links">
+      <a href="#coleccion" class="hover-target">Colección</a>
+      <a href="#experiencia" class="hover-target">Experiencia</a>
+      <a href="#contacto" class="hover-target">Contacto</a>
+    </div>
+    <div class="copyright">
+      © 2026 Aura Scents — El arte de oler extraordinario. <br>
+      Web creada por <a href="../index.html" class="hover-target">VitrineWeb</a>
+    </div>
+  </footer>
+
+  <script>
+    // 1. Custom Cursor
+    const cursor = document.getElementById('custom-cursor');
+    const hoverTargets = document.querySelectorAll('.hover-target, a, button, summary');
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    hoverTargets.forEach(target => {
+      target.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      target.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // 2. Intersection Observer (Scroll Reveal)
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+    // 3. Smart Header & Parallax
+    let lastScrollY = window.scrollY;
+    const header = document.getElementById('smart-header');
+    const heroBg = document.getElementById('hero-bg');
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+
+      // Smart Header Logic
+      if (currentScrollY > 100) {
+        if (currentScrollY > lastScrollY) {
+          header.classList.add('scrolled-down');
+          header.classList.remove('scrolled-up');
+        } else {
+          header.classList.remove('scrolled-down');
+          header.classList.add('scrolled-up');
+        }
+      } else {
+        header.classList.remove('scrolled-up');
+        header.classList.remove('scrolled-down');
+      }
+      lastScrollY = currentScrollY;
+
+      // Parallax Logic
+      if (currentScrollY < window.innerHeight) {
+        heroBg.style.transform = `translateY(${currentScrollY * 0.4}px)`;
+      }
+    });
+
+    // 4. Spotlight Hover Grid Effect
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    // 5. Magnetic Buttons
+    document.querySelectorAll('.btn-gold-outline, .btn-gold-solid').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) * 0.3;
+        const y = (e.clientY - rect.top - rect.height / 2) * 0.3;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = `translate(0px, 0px)`;
+      });
+    });
+  </script>
+</body>
+
+</html>

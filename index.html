@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VitrineWeb — Páginas web para tu negocio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --surface: #16161f;
+      --border: #2a2a3a;
+      --accent: #7c5cfc;
+      --accent2: #c084fc;
+      --accent-glow: rgba(124, 92, 252, 0.25);
+      --text: #f0f0f8;
+      --muted: #8888aa;
+      --white: #ffffff;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--accent2);
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+      margin-left: 2rem;
+    }
+
+    nav a:hover {
+      color: var(--white);
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+
+    .nav-cta:hover {
+      background: #6a4ae0 !important;
+      transform: translateY(-1px);
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 5% 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(124, 92, 252, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(192, 132, 252, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 60% 20%, rgba(124, 92, 252, 0.1) 0%, transparent 50%);
+      filter: blur(40px);
+      pointer-events: none;
+      animation: meshPulse 10s infinite alternate linear;
+    }
+
+    @keyframes meshPulse {
+      0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: scale(1.1) rotate(5deg);
+        opacity: 1;
+      }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(124, 92, 252, 0.12);
+      color: var(--accent2);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.45rem 1.1rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+      position: relative;
+      border: none;
+    }
+
+    .hero-badge::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 100px;
+      padding: 1.5px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent), var(--accent2));
+      background-size: 300% 100%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      animation: borderGlow 3s linear infinite;
+    }
+
+    @keyframes borderGlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 300% 50%;
+      }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 800px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 520px;
+      line-height: 1.7;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-btns {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(124, 92, 252, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: #6a4ae0;
+      transform: translateY(-2px);
+      box-shadow: 0 0 45px rgba(124, 92, 252, 0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats {
+      margin-top: 4rem;
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+
+    .scroll-indicator {
+      margin-top: 3rem;
+      animation: fadeUp 0.7s 0.5s ease both;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .scroll-indicator:hover span {
+      color: var(--accent2);
+    }
+
+    .scroll-indicator:hover .scroll-arrow {
+      opacity: 1;
+    }
+
+    .scroll-indicator span {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .scroll-arrow {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid var(--accent2);
+      border-bottom: 2px solid var(--accent2);
+      transform: rotate(45deg);
+      animation: scrollBounce 2s ease-in-out infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes scrollBounce {
+
+      0%,
+      100% {
+        transform: rotate(45deg) translateY(0);
+        opacity: 0.4;
+      }
+
+      50% {
+        transform: rotate(45deg) translateY(6px);
+        opacity: 0.9;
+      }
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 6rem 5%;
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.8rem;
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--white);
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-top: 0.8rem;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    .section-head {
+      margin-bottom: 3.5rem;
+    }
+
+    /* SERVICIOS */
+    #servicios {
+      background: var(--bg2);
+    }
+
+    .planes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+    }
+
+    .plan {
+      background: rgba(22, 22, 31, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      will-change: transform, box-shadow;
+    }
+
+    .plan:hover {
+      border-color: var(--accent);
+      transform: translateY(-12px);
+      box-shadow: 0 25px 60px rgba(124, 92, 252, 0.2);
+      z-index: 2;
+    }
+
+    .plan.featured {
+      border-color: rgba(192, 132, 252, 0.4);
+      background: linear-gradient(135deg, rgba(124, 92, 252, 0.15), rgba(22, 22, 31, 0.6));
+      z-index: 1;
+    }
+
+    .plan.featured:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 25px 60px rgba(192, 132, 252, 0.4);
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 100px;
+    }
+
+    .plan-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .plan-price {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
+      color: var(--accent2);
+      margin: 0.5rem 0 0.2rem;
+    }
+
+    .plan-price span {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .plan-maintenance {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #34d399;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.01em;
+    }
+
+    .plan-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .plan-features {
+      list-style: none;
+    }
+
+    .plan-features li {
+      font-size: 0.9rem;
+      color: var(--text);
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .plan-features li::before {
+      content: '✦';
+      color: var(--accent2);
+      font-size: 0.65rem;
+    }
+
+    .plan-cta {
+      display: block;
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 0.75rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .plan-cta.cta-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .plan-cta.cta-outline:hover {
+      border-color: var(--accent);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .plan-cta.cta-filled {
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      box-shadow: 0 0 25px rgba(124, 92, 252, 0.3);
+    }
+
+    .plan-cta.cta-filled:hover {
+      background: #6a4ae0;
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(124, 92, 252, 0.5);
+    }
+
+    .plan-cta.cta-premium {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: var(--white);
+      border: none;
+      box-shadow: 0 0 25px rgba(192, 132, 252, 0.3);
+    }
+
+    .plan-cta.cta-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(192, 132, 252, 0.5);
+    }
+
+    /* CÓMO FUNCIONA */
+    #como-funciona {
+      background: var(--bg);
+    }
+
+    .pasos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 1000px;
+      position: relative;
+    }
+
+    .paso {
+      text-align: center;
+      padding: 2rem 1.2rem;
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.25s;
+    }
+
+    .paso:hover {
+      border-color: var(--accent);
+    }
+
+    .paso:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 2.8rem;
+      right: -0.5rem;
+      width: 1rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      z-index: 2;
+    }
+
+    .paso-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .paso-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .paso-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+
+    .paso-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .nota-mantenimiento {
+      max-width: 700px;
+      margin: 3rem auto 0;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+      opacity: 0.75;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .pasos {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .paso:not(:last-child)::after {
+        display: none;
+      }
+
+      .paso {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+        text-align: left;
+        gap: 0 1rem;
+        padding: 1.2rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+      }
+
+      .paso-num {
+        grid-row: 1 / 3;
+        align-self: center;
+        font-size: 2.2rem;
+      }
+
+      .paso-icon {
+        display: none;
+      }
+
+      .paso-title {
+        margin-bottom: 0.2rem;
+      }
+    }
+
+    /* DEMOS */
+    #demos {
+      background: var(--bg);
+    }
+
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+    }
+
+    .demo-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      transition: border-color 0.25s, transform 0.25s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .demo-card:hover {
+      border-color: var(--accent2);
+      transform: translateY(-5px);
+    }
+
+    .demo-preview {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .demo-preview .demo-emoji {
+      transition: transform 0.35s ease;
+    }
+
+    .demo-card:hover .demo-emoji {
+      transform: scale(1.25);
+    }
+
+    .demo-preview.postres {
+      background: linear-gradient(135deg, #2d1b30, #1a0a20);
+    }
+
+    .demo-preview.ropa {
+      background: linear-gradient(135deg, #0d1f2d, #0a0f1e);
+    }
+
+    .demo-preview.perfume {
+      background: linear-gradient(135deg, #1c1508, #0f0c04);
+    }
+
+    .demo-info {
+      padding: 1.3rem;
+    }
+
+    .demo-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.4rem;
+    }
+
+    .demo-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .demo-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .demo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--accent2);
+      font-weight: 500;
+    }
+
+    /* POR QUÉ */
+    #porque {
+      background: var(--bg2);
+    }
+
+    .ventajas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+    }
+
+    .ventaja {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.8rem;
+      transition: border-color 0.2s;
+    }
+
+    .ventaja:hover {
+      border-color: var(--accent);
+    }
+
+    .ventaja-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .ventaja-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .ventaja-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* CONTACTO */
+    #contacto {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .contact-box {
+      max-width: 560px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem 2.5rem;
+    }
+
+    .contact-box h2 {
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .btn-wpp {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: #25d366;
+      color: #fff;
+      padding: 0.9rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 0 30px rgba(37, 211, 102, 0.25);
+    }
+
+    .btn-wpp:hover {
+      background: #1eb558;
+      transform: translateY(-2px);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem 5%;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer span {
+      color: var(--accent2);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav a:not(.nav-cta) {
+        display: none;
+      }
+
+      .hero-stats {
+        gap: 1.5rem;
+      }
+
+      .contact-box {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="logo">Vitrine<span>Web</span></a>
+    <div>
+      <a href="#servicios">Servicios</a>
+      <a href="#demos">Demos</a>
+      <a href="#contacto" class="nav-cta">Contáctame</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-badge">✦ Páginas web para emprendedores</div>
+    <h1>Tu negocio merece una <span class="highlight">presencia digital</span> profesional</h1>
+    <p class="hero-sub">Diseño páginas web elegantes para emprendimientos como de ropa, postres, perfumes y más — con tu
+      catálogo, tu marca y tu link de WhatsApp.</p>
+    <div class="hero-btns">
+      <a href="#demos" class="btn-primary">Ver demos</a>
+      <a href="#servicios" class="btn-secondary">Ver precios</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">3–5</div>
+        <div class="stat-label">Días de entrega</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Optimizada para móvil</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Visible en internet</div>
+      </div>
+    </div>
+    <a href="#servicios" class="scroll-indicator">
+      <span>Descubre más</span>
+      <div class="scroll-arrow"></div>
+    </a>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="section-head reveal">
+      <div class="section-label">Planes</div>
+      <h2>Elige el plan ideal<br>para tu negocio</h2>
+      <p class="section-sub">Sin costos ocultos. Todo incluido para que te veas profesional desde el primer día.</p>
+    </div>
+    <div class="planes reveal">
+      <div class="plan">
+        <div class="plan-name">🌱 Básico</div>
+        <div class="plan-price">S/ 349 <span>pago único</span></div>
+        <div class="plan-maintenance">+ S/ 49/mes mantenimiento</div>
+        <p class="plan-desc">Ideal para emprendedores que recién empiezan y quieren verse profesionales.</p>
+        <ul class="plan-features">
+          <li>1 página completa (inicio, productos, contacto)</li>
+          <li>Catálogo de hasta 6 productos</li>
+          <li>Botón de WhatsApp flotante</li>
+          <li>Diseño 100% responsive para celular</li>
+          <li>Dominio .com por 1 año incluido</li>
+          <li>Hosting básico incluido</li>
+          <li>Mantenimiento: web activa + 1 cambio/mes</li>
+        </ul>
+        <a href="https://wa.me/51907661742?text=Hola,%20me%20interesa%20el%20plan%20B%C3%A1sico"
+          class="plan-cta cta-filled" target="_blank">Elegir plan Básico →</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">⭐ Más popular</div>
+        <div class="plan-name">⚡ Pro</div>
+        <div class="plan-price">S/ 549 <span>pago único</span></div>
+        <div class="plan-maintenance">+ S/ 79/mes mantenimiento</div>
+        <p class="plan-desc">Para negocios que quieren destacar con más secciones y funcionalidades.</p>
+        <ul class="plan-features">
+          <li>Todo lo del plan Básico</li>
+          <li>Galería de hasta 12 fotos</li>
+          <li>Sección de reseñas y testimonios</li>
+          <li>Formulario de contacto</li>
+          <li>Correo profesional (info@tunegocio.com)</li>
+          <li>Paleta de colores personalizada</li>
+          <li>Hasta 12 productos en catálogo</li>
+          <li>Dominio .com por 1 año incluido</li>
+          <li>Hosting estándar incluido</li>
+          <li>Mantenimiento: web activa + 2 cambios/mes</li>
+        </ul>
+        <a href="https://wa.me/51907661742?text=Hola,%20me%20interesa%20el%20plan%20Pro" class="plan-cta cta-filled"
+          target="_blank">Elegir plan Pro →</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">👑 Premium</div>
+        <div class="plan-price">S/ 899 <span>pago único</span></div>
+        <div class="plan-maintenance">+ S/ 119/mes mantenimiento</div>
+        <p class="plan-desc">La solución completa: dominio, hosting premium, SEO y soporte continuo.</p>
+        <ul class="plan-features">
+          <li>Todo lo del plan Pro</li>
+          <li>Dominio .com por 2 años incluido</li>
+          <li>Hosting premium incluido</li>
+          <li>Certificado SSL de seguridad</li>
+          <li>SEO básico para Google</li>
+          <li>Mapa de Google</li>
+          <li>Sección "Sobre nosotros"</li>
+          <li>Hasta 20 productos en catálogo</li>
+          <li>2 revisiones de diseño incluidas</li>
+          <li>Mantenimiento: cambios ilimitados + reporte mensual</li>
+        </ul>
+        <a href="https://wa.me/51907661742?text=Hola,%20me%20interesa%20el%20plan%20Premium"
+          class="plan-cta cta-premium" target="_blank">Elegir Premium →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section id="como-funciona">
+    <div class="section-head reveal">
+      <div class="section-label">Proceso</div>
+      <h2>¿Cómo funciona?</h2>
+      <p class="section-sub">De tu idea a tu web en 4 pasos simples</p>
+    </div>
+    <div class="pasos reveal">
+      <div class="paso">
+        <div class="paso-num">01</div>
+        <span class="paso-icon">💬</span>
+        <div class="paso-title">Consulta gratis</div>
+        <p class="paso-desc">Me escribes por WhatsApp, me cuentas sobre tu negocio y te respondo con una propuesta en
+          menos de 24 horas. Sin compromisos.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">02</div>
+        <span class="paso-icon">💳</span>
+        <div class="paso-title">Pago del 50% adelantado</div>
+        <p class="paso-desc">Para comenzar el desarrollo necesito el 50% del total. Esto reserva tu lugar y cubre los
+          costos del dominio y hosting de tu web.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">03</div>
+        <span class="paso-icon">🎨</span>
+        <div class="paso-title">Desarrollo de tu web</div>
+        <p class="paso-desc">Con la información de tu negocio desarrollo tu página web personalizada. En 3 a 5 días
+          hábiles tienes tu web lista para revisar.</p>
+      </div>
+      <div class="paso">
+        <div class="paso-num">04</div>
+        <span class="paso-icon">🚀</span>
+        <div class="paso-title">Entrega y activación</div>
+        <p class="paso-desc">Apruebas la web, pagas el 50% restante y tu página queda activa en internet. A partir de
+          aquí el mantenimiento mensual mantiene todo funcionando.</p>
+      </div>
+    </div>
+    <p class="nota-mantenimiento reveal">* El mantenimiento mensual se cobra el día 1 de cada mes. En caso de no recibir
+      el pago en 5 días, el sitio web se pausará automáticamente hasta regularizar el pago.</p>
+  </section>
+
+  <!-- DEMOS -->
+  <section id="demos">
+    <div class="section-head reveal">
+      <div class="section-label">Demos</div>
+      <h2>Mira ejemplos reales<br>de lo que creo</h2>
+      <p class="section-sub">Cada demo está hecho para un rubro específico. ¿Reconoces tu negocio aquí?</p>
+    </div>
+    <div class="demos-grid reveal">
+      <a href="./postres/" class="demo-card" target="_blank">
+        <div class="demo-preview postres"><span class="demo-emoji">🧁</span></div>
+        <div class="demo-info">
+          <div class="demo-tag">Dulcería · Postres</div>
+          <div class="demo-title">Dulce Encanto</div>
+          <div class="demo-desc">Tortas, cupcakes y postres personalizados. Diseño cálido con paleta pastel y catálogo
+            visual.</div>
+          <div class="demo-link">Ver demo →</div>
+        </div>
+      </a>
+      <a href="./ropa/" class="demo-card" target="_blank">
+        <div class="demo-preview ropa"><span class="demo-emoji">👗</span></div>
+        <div class="demo-info">
+          <div class="demo-tag">Moda · Ropa</div>
+          <div class="demo-title">StyleDrop</div>
+          <div class="demo-desc">Tienda de ropa moderna con galería de outfits, tallas disponibles y compra por
+            WhatsApp.</div>
+          <div class="demo-link">Ver demo →</div>
+        </div>
+      </a>
+      <a href="./perfumes/" class="demo-card" target="_blank">
+        <div class="demo-preview perfume"><span class="demo-emoji">🌹</span></div>
+        <div class="demo-info">
+          <div class="demo-tag">Belleza · Perfumes</div>
+          <div class="demo-title">Aura Scents</div>
+          <div class="demo-desc">Catálogo de fragancias elegante con descripción de notas y pedidos directos por
+            WhatsApp.</div>
+          <div class="demo-link">Ver demo →</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- POR QUÉ -->
+  <section id="porque">
+    <div class="section-head reveal">
+      <div class="section-label">Ventajas</div>
+      <h2>¿Por qué elegirme<br>a mí?</h2>
+    </div>
+    <div class="ventajas reveal">
+      <div class="ventaja">
+        <div class="ventaja-icon">⚡</div>
+        <div class="ventaja-title">Entrega rápida</div>
+        <div class="ventaja-desc">Tu página lista en 3 a 5 días hábiles. Sin esperas eternas ni promesas vacías.</div>
+      </div>
+      <div class="ventaja">
+        <div class="ventaja-icon">📱</div>
+        <div class="ventaja-title">100% móvil</div>
+        <div class="ventaja-desc">El 90% de tus clientes te visitan desde el celular. Tu web se ve perfecta en cualquier
+          pantalla.</div>
+      </div>
+      <div class="ventaja">
+        <div class="ventaja-icon">💬</div>
+        <div class="ventaja-title">WhatsApp integrado</div>
+        <div class="ventaja-desc">Botón flotante con mensaje pre-escrito. El cliente llega listo para comprar.</div>
+      </div>
+      <div class="ventaja">
+        <div class="ventaja-icon">🎨</div>
+        <div class="ventaja-title">Diseño único</div>
+        <div class="ventaja-desc">Cada web refleja la identidad de tu negocio. No son plantillas genéricas.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="contact-box reveal">
+      <h2>¿Listo para<br>empezar?</h2>
+      <p>Escríbeme por WhatsApp y cuéntame sobre tu negocio. Te respondo en menos de 24 horas con una propuesta
+        personalizada.</p>
+      <a href="https://wa.me/51907661742?text=Hola,%20me%20interesa%20una%20p%C3%A1gina%20web%20para%20mi%20negocio"
+        class="btn-wpp" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+        Escribir por WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>VitrineWeb</span> — Páginas web para emprendedores peruanos 🇵🇪</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+</body>
+
+</html>

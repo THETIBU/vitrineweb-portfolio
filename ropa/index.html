@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STYLEDROP - Moda Urbana (Pro)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --gray: #444444;
+      --light-gray: #f2f2f2;
+      --accent: #FF3366;
+      /* Hot pink for more brutalist fashion contrast */
+      --whatsapp: #25D366;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* FILM GRAIN */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background-color: var(--light-gray);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      background: var(--bg);
+      border-bottom: 4px solid var(--text);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 3.5rem;
+      letter-spacing: 4px;
+      transition: color 0.3s;
+      -webkit-text-stroke: 1px var(--text);
+      color: transparent;
+    }
+
+    .logo:hover {
+      color: var(--accent);
+      -webkit-text-stroke: 1px var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .btn-buy {
+      background: var(--text);
+      color: var(--bg);
+      padding: 0.8rem 1.8rem;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      border: 2px solid var(--text);
+      box-shadow: 4px 4px 0 var(--accent);
+      transition: all 0.2s ease;
+    }
+
+    .btn-buy:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--accent);
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* HERO: OVERSIZED BRUTALISM */
+    .hero {
+      background-color: var(--accent);
+      color: var(--bg);
+      padding: 6rem 5% 8rem;
+      text-align: center;
+      position: relative;
+      border-bottom: 4px solid var(--text);
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(6rem, 15vw, 14rem);
+      margin-bottom: 0;
+      color: transparent;
+      -webkit-text-stroke: 3px var(--text);
+      transition: all 0.5s;
+      cursor: crosshair;
+      text-transform: uppercase;
+    }
+
+    .hero h1:hover {
+      color: var(--text);
+      transform: scale(1.02) skewX(-5deg);
+      text-shadow: 10px 10px 0 #fff;
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 3rem;
+      color: var(--text);
+      font-weight: 700;
+      text-transform: uppercase;
+      background: #fff;
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border: 3px solid var(--text);
+      box-shadow: 5px 5px 0 var(--text);
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .btn-hero {
+      padding: 1.2rem 3rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 3px solid var(--text);
+      box-shadow: 6px 6px 0 var(--text);
+      transition: all 0.2s ease;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .btn-hero:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--text);
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .btn-hero.wa {
+      background: var(--whatsapp);
+      color: #fff;
+    }
+
+    .btn-hero.wa:hover {
+      background: #fff;
+      color: var(--whatsapp);
+      border-color: var(--whatsapp);
+      box-shadow: 9px 9px 0 var(--whatsapp);
+    }
+
+    /* MARQUEE */
+    .marquee-container {
+      background: var(--text);
+      color: var(--bg);
+      padding: 0.4rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+      display: flex;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .marquee-content {
+      display: inline-block;
+      animation: marquee 20s linear infinite;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+    }
+
+    .marquee-content span {
+      margin: 0 3rem;
+      color: var(--accent);
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* COLLECTION */
+    .collection {
+      padding: 8rem 5%;
+      background: var(--light-gray);
+      text-align: center;
+    }
+
+    .collection h2 {
+      font-size: 6rem;
+      margin-bottom: 5rem;
+      color: var(--text);
+      -webkit-text-stroke: 1px transparent;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 3rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: var(--bg);
+      padding: 3rem 1.5rem;
+      border: 4px solid var(--text);
+      box-shadow: 8px 8px 0 var(--text);
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translate(-5px, -5px) skewX(-2deg);
+      box-shadow: 15px 15px 0 var(--accent);
+    }
+
+    .badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--text);
+      color: var(--bg);
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 2px;
+      border: 2px solid var(--text);
+    }
+
+    .badge.sale {
+      background: var(--accent);
+      border-color: var(--text);
+    }
+
+    .product-emoji {
+      font-size: 6rem;
+      margin: 2rem 0;
+      filter: drop-shadow(5px 5px 0 rgba(0, 0, 0, 0.8));
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover .product-emoji {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .product-name {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-sizes {
+      font-size: 1rem;
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      background: #eee;
+      display: inline-block;
+      padding: 0.2rem 0.8rem;
+      border: 2px solid var(--text);
+    }
+
+    .product-price {
+      font-size: 2.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      -webkit-text-stroke: 1px var(--text);
+    }
+
+    .btn-order {
+      margin-top: auto;
+      display: block;
+      width: 100%;
+      background: var(--text);
+      color: var(--bg);
+      padding: 1rem;
+      font-weight: 700;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      border: 3px solid var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .product-card:hover .btn-order {
+      background: var(--accent);
+      color: var(--text);
+    }
+
+    /* REVIEWS */
+    .reviews {
+      padding: 8rem 5%;
+      background: var(--text);
+      color: var(--bg);
+      text-align: center;
+      border-top: 4px solid var(--accent);
+    }
+
+    .reviews h2 {
+      font-size: 6rem;
+      margin-bottom: 5rem;
+      color: var(--bg);
+      -webkit-text-stroke: 2px var(--bg);
+      color: transparent;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .review-card {
+      background: var(--text);
+      padding: 3rem;
+      border: 4px solid var(--bg);
+      box-shadow: 10px 10px 0 var(--accent);
+      transition: transform 0.2s;
+    }
+
+    .review-card:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 15px 15px 0 var(--bg);
+    }
+
+    .stars {
+      color: var(--accent);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 5px;
+    }
+
+    .review-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--bg);
+      text-transform: uppercase;
+    }
+
+    .review-author {
+      font-size: 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      color: var(--accent);
+      background: var(--bg);
+      display: inline-block;
+      padding: 0.2rem 1rem;
+    }
+
+    /* FAQ ACCORDION */
+    .faq {
+      padding: 8rem 5%;
+      background: var(--bg);
+      max-width: 900px;
+      margin: 0 auto;
+      border: 4px solid var(--text);
+      box-shadow: 15px 15px 0 var(--text);
+      margin-bottom: 8rem;
+      margin-top: 8rem;
+    }
+
+    .faq h2 {
+      font-size: 5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    details {
+      border-bottom: 3px solid var(--text);
+      padding: 1.5rem 0;
+    }
+
+    summary {
+      font-weight: 700;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      cursor: pointer;
+      list-style: none;
+      position: relative;
+      padding-right: 3rem;
+      color: var(--text);
+      outline: none;
+      transition: color 0.2s;
+    }
+
+    summary:hover {
+      color: var(--accent);
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: '+';
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 3rem;
+      line-height: 0.8;
+      color: var(--text);
+      transition: transform 0.3s;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+      color: var(--accent);
+    }
+
+    details p {
+      margin-top: 1.5rem;
+      color: var(--gray);
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 8rem 5%;
+      background: var(--accent);
+      border-top: 4px solid var(--text);
+      text-align: center;
+    }
+
+    .contact-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--bg);
+      border: 4px solid var(--text);
+      box-shadow: 15px 15px 0 var(--text);
+      padding: 4rem;
+    }
+
+    .contact h2 {
+      font-size: 5rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .contact p {
+      color: var(--gray);
+      margin-bottom: 3rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: inline-block;
+      font-weight: 700;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      background: var(--text);
+      color: var(--bg);
+      padding: 0.2rem 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1.2rem;
+      border: 4px solid var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: var(--light-gray);
+      transition: all 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      background: var(--bg);
+      box-shadow: 6px 6px 0 var(--accent);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--text);
+      color: var(--bg);
+      padding: 1.5rem;
+      border: 4px solid var(--text);
+      font-size: 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 8px 8px 0 var(--whatsapp);
+    }
+
+    .btn-submit:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 12px 12px 0 var(--whatsapp);
+      background: var(--whatsapp);
+      color: var(--text);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 5rem 5%;
+      background: var(--text);
+      color: var(--bg);
+      text-align: center;
+      border-top: 4px solid var(--accent);
+    }
+
+    footer p {
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    footer a {
+      color: var(--accent);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: #fff;
+    }
+
+    /* FLOATING WA */
+    .btn-float-wa {
+      position: fixed;
+      bottom: 3rem;
+      right: 3rem;
+      background: var(--whatsapp);
+      color: white;
+      width: 80px;
+      height: 80px;
+      border: 4px solid var(--text);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 6px 6px 0 var(--text);
+      z-index: 1000;
+      transition: all 0.2s;
+    }
+
+    .btn-float-wa:hover {
+      transform: translate(-5px, -5px) scale(1.1);
+      box-shadow: 12px 12px 0 var(--text);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 5rem;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+      }
+
+      .contact-container {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="#" class="logo">STYLEDROP</a>
+    <div class="nav-links">
+      <a href="#">Inicio</a>
+      <a href="#coleccion">Colección</a>
+      <a href="#resenas">Reseñas</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a href="https://wa.me/51xxxxxxxxxx" class="btn-buy" target="_blank">Comprar ↘</a>
+  </header>
+
+  <div class="marquee-container">
+    <div class="marquee-content">
+      💥 ENVÍO GRATIS LIMA <span>•</span> 💥 NUEVA COLECCIÓN <span>•</span> CAMBIOS Y DEVOLUCIONES <span>•</span> 💥
+      OVERSIZED DROP <span>•</span>
+    </div>
+    <div class="marquee-content" aria-hidden="true">
+      💥 ENVÍO GRATIS LIMA <span>•</span> 💥 NUEVA COLECCIÓN <span>•</span> CAMBIOS Y DEVOLUCIONES <span>•</span> 💥
+      OVERSIZED DROP <span>•</span>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>DROP 2025</h1>
+      <p>La calle es tu pasarela. Viste diferente.</p>
+      <div class="hero-btns">
+        <a href="#coleccion" class="btn-hero primary">Explorar Drop</a>
+        <a href="https://wa.me/51xxxxxxxxxx" class="btn-hero wa" target="_blank">Chat Directo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="collection" id="coleccion">
+    <h2>Catálogo Urbano</h2>
+    <div class="grid">
+      <!-- 1 -->
+      <div class="product-card">
+        <span class="badge">NUEVO</span>
+        <div class="product-emoji">👗</div>
+        <h3 class="product-name">Vestido Asimétrico</h3>
+        <div class="product-sizes">S / M / L</div>
+        <div class="product-price">S/ 89</div>
+        <a href="https://wa.me/51xxxxxxxxxx" class="btn-order" target="_blank">LO QUIERO ↗</a>
+      </div>
+      <!-- 2 -->
+      <div class="product-card">
+        <span class="badge sale">🔥 OFERTA</span>
+        <div class="product-emoji">👖</div>
+        <h3 class="product-name">Baggy Jeans Oscuros</h3>
+        <div class="product-sizes">28 / 30 / 32</div>
+        <div class="product-price">S/ 75</div>
+        <a href="https://wa.me/51xxxxxxxxxx" class="btn-order" target="_blank">LO QUIERO ↗</a>
+      </div>
+      <!-- 3 -->
+      <div class="product-card">
+        <div class="product-emoji">👚</div>
+        <h3 class="product-name">Oversize Tee</h3>
+        <div class="product-sizes">M / L / XL</div>
+        <div class="product-price">S/ 55</div>
+        <a href="https://wa.me/51xxxxxxxxxx" class="btn-order" target="_blank">LO QUIERO ↗</a>
+      </div>
+      <!-- 4 -->
+      <div class="product-card">
+        <div class="product-emoji">🧥</div>
+        <h3 class="product-name">Puffer Jacket</h3>
+        <div class="product-sizes">S / M / L</div>
+        <div class="product-price">S/ 145</div>
+        <a href="https://wa.me/51xxxxxxxxxx" class="btn-order" target="_blank">LO QUIERO ↗</a>
+      </div>
+      <!-- 5 -->
+      <div class="product-card">
+        <div class="product-emoji">🥻</div>
+        <h3 class="product-name">Falda Cargo Mini</h3>
+        <div class="product-sizes">S / M / L</div>
+        <div class="product-price">S/ 65</div>
+        <a href="https://wa.me/51xxxxxxxxxx" class="btn-order" target="_blank">LO QUIERO ↗</a>
+      </div>
+      <!-- 6 -->
+      <div class="product-card">
+        <span class="badge">NUEVO</span>
+        <div class="product-emoji">👕</div>
+        <h3 class="product-name">Hoddie Estampado</h3>
+        <div class="product-sizes">M / L</div>
+        <div class="product-price">S/ 90</div>
+        <a href="https://wa.me/51xxxxxxxxxx" class="btn-order" target="_blank">LO QUIERO ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews" id="resenas">
+    <h2>La Crew Habla</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"La ropa tiene un flow brutal. El hoodie es súper pesado y abriga perfecto."</p>
+        <div class="review-author">@Mariaa_G</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Me enviaron mis baggy jeans a provincia en 2 días. El fit es exactamente lo que
+          buscaba."</p>
+        <div class="review-author">@Lu_cia90</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <h2>Reglas del Juego</h2>
+    <details>
+      <summary>¿Hacen contraentrega?</summary>
+      <p>Solo en estaciones del tren eléctrico (Línea 1). Para envíos a domicilio en Lima, requerimos transferencia o
+        Plin previo del 50%.</p>
+    </details>
+    <details>
+      <summary>¿Envíos a provincia?</summary>
+      <p>Sí, mandamos tu pedido por Shalom u Olva Courier el mismo día si confirmas antes de las 2 PM. Pago adelantado
+        100%.</p>
+    </details>
+    <details>
+      <summary>¿Devoluciones?</summary>
+      <p>Tienes 3 días desde que recibes el paquete. La prenda no debe estar lavada ni modificada. Los gastos de envío
+        por cambio van por tu cuenta.</p>
+    </details>
+  </section>
+
+  <section class="contact" id="contacto">
+    <div class="contact-container">
+      <h2>Dime Aló</h2>
+      <p>Estamos 24/7 en WhatsApp bro. Escríbenos.</p>
+      <form onsubmit="event.preventDefault(); window.open('https://wa.me/51xxxxxxxxxx', '_blank');">
+        <div class="form-group">
+          <label for="name">Tu Name</label>
+          <input type="text" id="name" class="form-control" placeholder="Cómo te decimos">
+        </div>
+        <div class="form-group">
+          <label for="message">Qué buscas</label>
+          <textarea id="message" class="form-control"
+            placeholder="Pregunta por tallas, envíos o lo que sea..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Enviar DM x WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 STYLEDROP — NO FAKES</p>
+    <p>WEBSITE HECHO POR <a href="../index.html">VITRINEWEB</a></p>
+  </footer>
+
+  <a href="https://wa.me/51xxxxxxxxxx" class="btn-float-wa" target="_blank" aria-label="WhatsApp">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path
+        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+      </path>
+    </svg>
+  </a>
+</body>
+
+</html>
